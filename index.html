@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
     <title>智能白板</title>
     <style>
         :root {
@@ -110,12 +109,6 @@
             height: 22px;
         }
         
-        /* 新增：退出按钮样式 */
-        .tool-btn.danger:hover:not(:disabled) {
-            background: #fee2e2;
-            color: #dc2626;
-        }
-
         .divider {
             width: 1px;
             height: 32px;
@@ -479,55 +472,17 @@
                 <circle cx="10.5" cy="6.5" r="0.5" fill="currentColor"/>
             </svg>
         </button>
-
-        <!-- 退出按钮 -->
-        <button class="tool-btn danger" id="exitBtn" title="隐藏白板">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-        </button>
     </div>
     
     <script>
-        // ==================== 新增：Qt通信桥梁 (修复版) ====================
-        var external = null;
-        
-        // 等待页面完全加载后初始化 Channel
+        // 页面加载初始化
         window.onload = function() {
-            // 确保 QWebChannel 存在 (Qt环境)
-            if (typeof QWebChannel === 'function') {
-                // 检查 qt 对象是否存在
-                if (typeof qt !== 'undefined' && qt.webChannelTransport) {
-                    new QWebChannel(qt.webChannelTransport, function(channel) {
-                        external = channel.objects.external;
-                        console.log("✅ Qt WebChannel 已连接, external对象获取成功");
-                    });
-                } else {
-                    console.warn("❌ qt.webChannelTransport 不存在，可能是独立浏览器环境");
-                }
-            } else {
-                console.warn("❌ QWebChannel 未定义");
-            }
-
-            // 初始化页面
             initColorPalette();
             initBgColorPalette();
             updateBrushSize();
             updateEraserSize();
             initFirstPage();
         };
-
-        // 关闭窗口的函数
-        function closeWhiteboard() {
-            console.log("尝试调用 closeWhiteboard...");
-            if (external) {
-                console.log("正在调用 external.hideWindow()...");
-                external.hideWindow();
-            } else {
-                console.error("❌ external 对象不存在，无法调用 Python 函数");
-            }
-        }
 
         // 颜色定义
         const colors = [
@@ -588,7 +543,6 @@
         const addPageBtn = document.getElementById('addPageBtn');
         const deletePageBtn = document.getElementById('deletePageBtn');
         const settingsBtn = document.getElementById('settingsBtn');
-        const exitBtn = document.getElementById('exitBtn'); // 退出按钮引用
         
         // 核心功能：根据背景色计算实际显示颜色
         function getActualColor(colorMode, bgColor) {
@@ -625,7 +579,7 @@
             
             const initialViewX = -w / 2 + window.innerWidth / 2;
             const initialViewY = -h / 2 + window.innerHeight / 2;
-            canvas.style.transform = `translate(${initialViewX}px, ${initialViewY}px)`;
+            canvas.style.transform = `translate(${initialViewX}px,${initialViewY}px)`;
             
             const ctx = canvas.getContext('2d');
             ctx.lineCap = 'round';
@@ -819,7 +773,7 @@
                 
                 page.viewX = newViewX;
                 page.viewY = newViewY;
-                page.canvas.style.transform = `translate(${newViewX}px, ${newViewY}px)`;
+                page.canvas.style.transform = `translate(${newViewX}px,${newViewY}px)`;
                 return;
             }
             
@@ -1116,9 +1070,6 @@
                 settingsPanel.classList.remove('visible');
              }
         });
-
-        // 退出按钮事件绑定
-        exitBtn.addEventListener('click', closeWhiteboard);
         
         brushSizeSlider.addEventListener('input', updateBrushSize);
         eraserSizeSlider.addEventListener('input', updateEraserSize);
