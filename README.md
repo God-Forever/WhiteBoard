@@ -8,7 +8,7 @@ A lightweight screen annotation tool based on PySide6, featuring a floating cont
 
 1.  Download the **`WhiteBoard.zip`** from the [Releases](https://github.com/God-Forever/WhiteBoard/releases) page.
 2.  Unzip the file to any directory.
-3.  Double-click **`reg.exe`** to add the program to the Windows Registry (this sets up necessary configurations).
+3.  Double-click **`reg.exe`** to add the program to the Windows Registry (add the program to startup items).
 
 ### Option 2: Run from Source
 
