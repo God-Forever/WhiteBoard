@@ -18,7 +18,7 @@ A lightweight screen annotation tool based on PySide6, featuring a floating cont
 
 **Steps:**
 
-```bash
+```cmd
 git clone https://github.com/God-Forever/WhiteBoard.git
 cd WhiteBoard
 pip install pyside6 pyside6
