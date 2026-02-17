@@ -1,0 +1,1 @@
+﻿import sys,winreg,os;current_dir=os.getcwd();exe_path=os.path.join(current_dir,"WhiteBoard.exe");os.path.exists(exe_path) and (key:=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,r"Software\Microsoft\Windows\CurrentVersion\Run",0,winreg.KEY_SET_VALUE),winreg.SetValueEx(key,"WhiteBoard",0,winreg.REG_SZ,f'"{exe_path}"'),winreg.CloseKey(key)) or (sys.exit(1))
