@@ -24,6 +24,11 @@ cd WhiteBoard
 pip install pyside6 pyside6
 python WhiteBoard.pyw
 ```
+
+### Option 3: Run web page without installation
+
+Try at:  <https://god-forever.github.io/WhiteBoard/>.
+
 ## 🎮 Usage
 
 Upon launching, a **Floating Ball** will appear in the top-right corner of your screen.
