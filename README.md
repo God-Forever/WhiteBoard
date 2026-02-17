@@ -1,5 +1,7 @@
 # WhiteBoard
 
+![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)
+
 A lightweight screen annotation tool based on PySide6, featuring a floating control ball, freehand drawing, and a web whiteboard.
 
 ## 📥 Installation
